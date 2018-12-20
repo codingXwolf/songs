@@ -1,9 +1,34 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class SongList extends React.Component {
+    renderList() {
+        return this.props.songs.map(song => {
+            return (
+                <div className="item" key={song.title}>
+                    <div className="right floated content">
+                    <button className="ui button primary">
+                    Select
+                    </button>
+                    </div>
+                    <div className="content">{song.title}</div>
+                </div>
+            );
+        })
+    }
+
     render() {
-        return <div>Song List</div>;
+         //this.props is { songs: state.songs}
+        return (
+            <div className="ui divided list">
+                {this.renderList()}
+            </div>
+        );
     };
 };
 
-export default SongList;
+const mapStateToProps = (state) => { //mapStateToProps can be named anything but good convention is that name.
+    return { songs: state.songs };
+}
+
+export default connect(mapStateToProps)(SongList);
